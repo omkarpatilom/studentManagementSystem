@@ -1,0 +1,24 @@
+﻿@model List<StudentManagementSystem.Models.ViewModels.CourseViewModel>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Faculty Name</th>
+            <th>Fees</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.CourseName</td>
+                <td>@course.FacultyDetails?.FacultyName</td>
+                <td>@course.Fees</td>
+                <td>@course.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

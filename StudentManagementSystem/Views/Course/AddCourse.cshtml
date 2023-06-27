@@ -1,0 +1,30 @@
+﻿@model StudentManagementSystem.Models.ViewModels.CourseViewModel
+
+
+<form method="post">
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Course Name</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" asp-for="CourseName">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Fees</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" asp-for="Fees">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Description</label>
+        <textarea type="text" class="form-control" id="exampleInputEmail1" asp-for="Description"></textarea>
+    </div>
+
+<div class="form-group">
+    <label for="FacultyDetailsId">Select Faculty:</label>
+    @Html.DropDownListFor(model => model.FacultyDetailsId, Model.FacultyOptions, "-- Select Faculty --", new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.FacultyDetailsId, "", new { @class = "text-danger" })
+</div>
+
+
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

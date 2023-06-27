@@ -1,0 +1,93 @@
+﻿@using StudentManagementSystem.Models.Domain
+@{
+    var student = ViewBag.Student as Student;
+    var enrolledCourses = ViewBag.EnrolledCourses as List<Course>;
+    var enrollments = ViewBag.Enrollments as List<EnrollDetails>;
+    var availableCourses = ViewBag.AvailableCourses as List<Course>;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Impressive Page</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, @student.UserName!</h1><br />
+        <div class="card">
+    <div class="card-header">
+        <h4>Personal Information:</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Name:</strong> @student.FullName</li>
+                    <li class="list-group-item"><strong>Phone Number:</strong> @student.PhoneNo</li>
+                    <li class="list-group-item"><strong>Address:</strong> @student.Address</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Roll Number:</strong> @student.RollNo</li>
+                    <li class="list-group-item"><strong>Date of Birth:</strong> @student.DateOfBirth.ToString("dd/MM/yyyy")</li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <br/><h4>Available Courses:</h4>
+        <form action="CreateCourse" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="RollNo" value="@student.RollNo" />
+
+            <select class="form-control" name="courseId">
+                <option value="">Select a course</option>
+                @foreach (var course in availableCourses)
+                {
+                    if (!enrolledCourses.Any(ec => ec.CourseId == course.CourseId))
+                    {
+                        <option value="@course.CourseId">@course.CourseName</option>
+                    }
+                }
+            </select>
+
+            <button type="submit" class="btn btn-primary mt-2">Enroll</button>
+        </form>
+
+        <h4>Enrollments:</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Faculty</th>
+                    <th>Enroll Date</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var enrollment in enrollments)
+                {
+                    <tr>
+                        <td>@enrollment.course.CourseName</td>
+                        <td>@enrollment.course.FacultyDetails.FacultyName</td>
+                        <td>@enrollment.EnrollDate.ToString("yyyy-MM-dd")</td>
+                        <td>@enrollment.course.Description</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

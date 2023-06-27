@@ -1,0 +1,48 @@
+﻿@model StudentManagementSystem.Models.ViewModels.CombinedViewModel
+
+<h1>Student and Course Data</h1>
+
+@foreach (var student in Model.Students)
+{
+    <div>
+        <h2>Student Information - Roll No: @student.RollNo</h2>
+        <p><strong>Username:</strong> @student.UserName</p>
+        <p><strong>Full Name:</strong> @student.FullName</p>
+        <p><strong>Date of Birth:</strong> @student.DateOfBirth.ToString("yyyy-MM-dd")</p>
+        <p><strong>Gender:</strong> @student.Gender</p>
+        <p><strong>Phone No:</strong> @student.PhoneNo</p>
+        <p><strong>Address:</strong> @student.Address</p>
+    </div>
+@*
+    @if (student.Enroll.Any())
+    {
+        <h2>Enrolled Courses</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Fees</th>
+                    <th>Description</th>
+                    <th>Enroll Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var enroll in student.Enroll)
+                {
+                    <tr>
+                        <td>@enroll.CourseName</td>
+                        <td>@enroll.Fees</td>
+                        <td>@enroll.Description</td>
+                        <td>@enroll.EnrollDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No courses enrolled.</p>
+    }*@
+
+    <hr />
+}

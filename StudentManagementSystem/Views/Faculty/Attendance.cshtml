@@ -1,0 +1,148 @@
+﻿@*@model List<StudentManagementSystem.Models.ViewModels.AttendanceViewModel>
+
+@using (Html.BeginForm("MarkAttendance", "Faculty", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Attendance Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>@Model[i].StudentId</td>
+                        <td>@Model[i].Student.FullName</td>
+                        <td>
+                            @Html.Hidden($"attendanceData[{i}].StudentId", Model[i].StudentId)
+                            @Html.Hidden($"attendanceData[{i}].courseId", Model[i].courseId)
+                            <select class="form-control status-select" name="attendanceData[@i].Status">
+                                <option value="Present">Present</option>
+                                <option value="Absent">Absent</option>
+                            </select>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Attendance</button>
+}
+
+<script>
+    $(document).ready(function() {
+        // ...
+        $('#submit-attendance-btn').click(function() {
+            var attendanceData = [];
+
+            // Loop through each student row and extract the attendance data
+            $('tbody tr').each(function() {
+                var studentId = $(this).find('input[name^="attendanceData"]').val();
+                var courseId  = $(this).find('input[name^="attendanceData"]').val();
+                var attendanceStatus = $(this).find('.status-select').val();
+                attendanceData.push({
+                    StudentId: studentId,
+                    courseId: courseId,
+                    Status: attendanceStatus
+                });
+            });
+
+            // ...
+        });
+    });
+</script>
+
+
+
+
+*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+@model List<StudentManagementSystem.Models.ViewModels.AttendanceViewModel>
+
+@{
+    // Order the Model by StudentId
+    var sortedStudent = Model.OrderBy(m => m.StudentId).ToList();
+}
+
+@using (Html.BeginForm("MarkAttendance", "Faculty", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Attendance Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < sortedStudent.Count; i++)
+                {
+                    <tr>
+                        <td>@sortedStudent[i].StudentId</td>
+                        <td>@sortedStudent[i].Student.FullName</td>
+                        <td>
+                            @Html.Hidden($"attendanceData[{i}].StudentId", sortedStudent[i].StudentId)
+                            @Html.Hidden($"attendanceData[{i}].courseId", sortedStudent[i].courseId)
+                            @Html.Hidden($"attendanceData[{i}].Status", "Present")
+
+                            <button type="button" class="btn status-button btn-success" value="Present" data-status="Present" onclick="toggleAttendance(this, @i)">Present</button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Attendance</button>
+}
+
+<script>
+    function toggleAttendance(button, index) {
+        var currentStatus = button.getAttribute('data-status');
+        var newStatus = (currentStatus === 'Present') ? 'Absent' : 'Present';
+
+        // Update button text and class
+        button.innerText = newStatus;
+        button.setAttribute('data-status', newStatus);
+        button.classList.remove('btn-success');
+        button.classList.remove('btn-danger');
+        button.classList.add(newStatus === 'Present' ? 'btn-success' : 'btn-danger');
+
+        // Update attendanceData array
+        var row = button.parentNode.parentNode;
+        var studentId = row.querySelector(`input[name='attendanceData[${index}].StudentId']`).value;
+        var courseId = row.querySelector(`input[name='attendanceData[${index}].courseId']`).value;
+        var attendanceData = {
+            StudentId: studentId,
+            courseId: courseId,
+            Status: newStatus
+        };
+
+        // Update attendanceData array in the hidden input field
+        row.querySelector(`input[name='attendanceData[${index}].Status']`).value = newStatus;
+    }
+
+</script>

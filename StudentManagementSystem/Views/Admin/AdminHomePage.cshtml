@@ -1,0 +1,63 @@
+﻿@model StudentManagementSystem.Models.Domain.Admin
+
+
+@{
+    var admin = ViewBag.admin;
+    var Courses = ViewBag.AllCourses as List<StudentManagementSystem.Models.Domain.Course>;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Impressive Page</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+</html>
+<body>
+    <div class="container">
+        <h1>@admin.designation, @admin.Name!</h1><br />
+        <button class="btn btn-primary" id="register-button">Register Faculty</button>
+
+    </div><br />
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+            <th>course Name</th>
+            <th>Fess</th>
+             <th>Discription</th>
+             <th>Faculty Id</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+            @foreach(var course in Courses)
+                {
+                   <tr>
+                        <td>@course.CourseName</td>
+                        <td>@course.Fees</td>
+                        <td>@course.Description</td>
+                        <td>@course.FacultyDetailsId</td>
+                   </tr>
+                }
+        </tbody>
+
+    </table>
+
+
+    <script>
+        $(document).ready(function() {
+    $('#register-button').click(function() {
+        window.location.href = '@Url.Action("FacultyRegister", "Admin")';
+    });
+});
+    </script>
+
+</body>
+
+
+

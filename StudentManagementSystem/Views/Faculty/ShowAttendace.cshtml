@@ -1,0 +1,44 @@
+﻿@model List<StudentManagementSystem.Models.ViewModels.AttendanceViewModel>
+
+@{
+    // Order the Model by StudentId
+    var sortedStudent = Model.OrderBy(m => m.StudentId).ToList();
+}
+
+@using (Html.BeginForm("MarkAttendance", "Faculty", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Attendance Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < sortedStudent.Count; i++)
+                {
+                    <tr>
+                        <td>@sortedStudent[i].StudentId</td>
+                        <td>@sortedStudent[i].Student.FullName</td>
+                         <td>@sortedStudent[i].Student.PhoneNo</td>
+                          <td>@sortedStudent[i].Student.Address</td>
+                        <td>
+                            @if (sortedStudent[i].Status == "Present")
+                            {
+                                <button type="button" class="btn btn-success">@sortedStudent[i].Status</button>
+                            }
+                            else if (sortedStudent[i].Status == "Absent")
+                            {
+                                <button type="button" class="btn btn-danger">@sortedStudent[i].Status</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

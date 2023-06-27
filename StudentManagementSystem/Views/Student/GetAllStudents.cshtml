@@ -1,0 +1,36 @@
+﻿@model List<StudentManagementSystem.Models.Domain.Student>
+@{
+}
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Roll No</th>
+      <th scope="col">Full Name</th>
+      <th scope="col">Bith Date</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Phone no</th>
+      <th scope="col">Address</th>
+      <th scope="col">CourseName</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody >
+        @foreach (var std in Model)
+        {
+    <tr>
+      <td>@std.RollNo</td>
+      <td>@std.FullName</td>
+      <td>@std.DateOfBirth</td>
+      <td>@std.Gender</td>
+      <td>@std.PhoneNo</td>
+      <td>@std.Address</td>
+      
+     <th><a href="@Url.Action("UpdateStudent", "Student", new { rollno = std.RollNo })">Update</a></th>
+     <th><a href="@Url.Action("DeleteFromList", "Student", new { rollno = std.RollNo })">Delete</a></th>
+
+    </tr>
+        }
+  </tbody>
+</table>
