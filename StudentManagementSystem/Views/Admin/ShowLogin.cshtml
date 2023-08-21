@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login Page</title>
+    <!-- Include Bootstrap CSS and jQuery -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- HTML code for the initial popup -->
+    <div id="rolePopup" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="roleModalLabel">Select Role</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary btn-lg" onclick="selectRole('Admin')">Admin</button>
+                        <button type="button" class="btn btn-primary btn-lg" onclick="selectRole('Student')">Student</button>
+                        <button type="button" class="btn btn-primary btn-lg" onclick="selectRole('Faculty')">Faculty</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HTML code for the login page -->
+    <div id="loginPage" style="display: none;">
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" action="@Url.Action("Login", "Admin")">
+                                <!-- Hidden input field for selected role -->
+                                <input type="hidden" id="selectedRole" name="SelectedRole" />
+
+                                <!-- Email input -->
+                                <div class="form-group">
+                                    <label class="form-label" for="loginName">Username</label>
+                                    <input type="text" id="loginName" class="form-control" name="UserName" />
+                                </div>
+
+                                <!-- Password input -->
+                                <div class="form-group">
+                                    <label class="form-label" for="loginPassword">Password</label>
+                                    <input type="password" id="loginPassword" class="form-control" name="Password" />
+                                </div>
+
+                                <!-- 2 column grid layout -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!-- Checkbox -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="loginCheck"
+                                                checked />
+                                            <label class="form-check-label" for="loginCheck">Remember me</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 text-right">
+                                        <!-- Simple link -->
+                                        <a href="#!">Forgot password?</a>
+                                    </div>
+                                </div>
+
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary btn-block mt-3">Sign in</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Trigger the initial popup when the login page is accessed
+            $('#rolePopup').modal('show');
+        });
+
+        function selectRole(role) {
+    // Set the selected role in the hidden input field
+    $('#selectedRole').val(role);
+    console.log($('#selectedRole').val()); // Add this line to verify the value
+    
+    $('#rolePopup').modal('hide');
+    $('#loginPage').show();
+}
+    </script>
+</body>
+
+</html>

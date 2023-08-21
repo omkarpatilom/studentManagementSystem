@@ -1,0 +1,33 @@
+﻿@model StudentManagementSystem.Models.ViewModels.CourseViewModel
+
+
+<form method="post">
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Course Name</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" asp-for="CourseName">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Start Date</label>
+        <input type="date" class="form-control" id="exampleInputEmail1" asp-for="StartDate"></input>
+    </div>
+     <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">End Date</label>
+        <input type="date" class="form-control" id="exampleInputEmail1" asp-for="EndDate"></input>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Fees</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" asp-for="Fees">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Description</label>
+        <textarea type="text" class="form-control" id="exampleInputEmail1" asp-for="Description"></textarea>
+    </div>
+
+<div class="form-group">
+    <label for="FacultyDetailsId">Select Faculty:</label>
+    @Html.DropDownListFor(model => model.FacultyDetailsId, Model.FacultyOptions, "-- Select Faculty --", new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.FacultyDetailsId, "", new { @class = "text-danger" })
+</div><br />
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
