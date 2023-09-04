@@ -1,0 +1,29 @@
+﻿@model List<StudentExam.Model.Domain.QuestionDetails>;
+
+<h1>Hii</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>question</th>
+            <th>Option1</th>
+            <th>Option2</th>
+            <th>Option3</th>
+            <th>Option4</th>
+            <th>Answer</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.QuestionDescription</td>
+            <td>@item.Option1</td>
+            <td>@item.Option2</td>
+            <td>@item.Option3</td>
+            <td>@item.Option4</td>
+            <td>@item.CorrectAns</td>
+        </tr>
+        }
+    </tbody>
+</table>

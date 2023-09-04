@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace StudentManagementSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class addedcoursedatefeesstatus : Migration
+    public partial class intialmig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

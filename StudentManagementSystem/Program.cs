@@ -20,6 +20,7 @@ builder.Services.AddSession(options =>
     // Configure session options as needed
 });
 
+builder.Services.AddHttpClient();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,0 +1,43 @@
+﻿@model StudentExam.Model.Domain.Test
+
+
+@{
+    ViewData["Title"] = "CreateTest";
+    var course = ViewBag.course as StudentManagementSystem.Models.Domain.Course;
+    
+}
+
+<form method="post" asp-action="CreateTest">
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" asp-for="TestTitle">
+        <input asp-for="CourseID" hidden/>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Start Time</label>
+        <input type="datetime-local" class="form-control" asp-for="StartTime" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">End Time</label>
+        <input type="datetime-local" class="form-control" asp-for="EndTime">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" asp-for="TestDesc"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Instructions</label>
+        <textarea class="form-control" asp-for="Instructions"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">passing marks</label>
+        <input type="number" class="form-control" asp-for="PassScore" />
+    </div> 
+    <div class="mb-3">
+        <label class="form-label">Total marks</label>
+        <input type="number" class="form-control" asp-for="TotalMarks" />
+    </div>
+   
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

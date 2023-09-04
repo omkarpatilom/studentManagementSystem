@@ -24,7 +24,9 @@
             
             <div class="col">
                 <h3>Welcome, @Model[0].course.FacultyDetails.FacultyName</h3>
+                <button class="btn btn-primary" type="submit" asp-action="scheduleTest" asp-controller="Faculty">schedule Test</button>
             </div>
+
         </div>
 
         <div class="row mt-4"style="width: 24rem">
@@ -37,10 +39,13 @@
                                 <h5 class="card-title">@course.CourseName</h5>
                                 <p class="card-text">@course.Description</p>
                                 <div>
-                                    <a href="@Url.Action("Attendance", "Faculty", new { courseId = course.CourseId, courseName = course.CourseName })" class="btn btn-primary mr-2">Mark Attendance</a>
-                                    <a href="@Url.Action("ShowAttendace", "Faculty", new { courseId = course.CourseId })" class="btn btn-primary">Show Attendance</a>
+                                    <a href="@Url.Action("Attendance", "Faculty", new { courseId = course.CourseId, courseName = course.CourseName })" class="btn btn-primary mr-2">Mark Attendance</a>&ensp;
+                                    <a href="@Url.Action("ShowAttendace", "Faculty", new { courseId = course.CourseId })" class="btn btn-primary">Show Attendance</a>&ensp;
+                                    <a href="@Url.Action("QuestionSets", "StudentTest", new { courseId = course.CourseId })" class="btn btn-primary ">schedule Test</a>&ensp;
+                                  
                                 </div>
                             </div>
+                           
                         </div>
                     }
                 </div>
@@ -86,6 +91,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

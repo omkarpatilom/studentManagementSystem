@@ -265,6 +265,11 @@ namespace StudentManagementSystem.Controllers
             return View(attendanceViewModels);
         }
 
+        public IActionResult scheduleTest(int courseId)
+        {
+            return View();                                     //call to schedule a test
+        }
+
 
 
     }

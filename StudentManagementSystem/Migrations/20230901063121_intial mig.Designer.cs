@@ -11,8 +11,8 @@ using StudentManagementSystem.Data;
 namespace StudentManagementSystem.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    [Migration("20230818122655_added course date feesstatus")]
-    partial class addedcoursedatefeesstatus
+    [Migration("20230901063121_intial mig")]
+    partial class intialmig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
