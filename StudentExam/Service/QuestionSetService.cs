@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using StudentExam.Controllers;
 using StudentExam.Data;
 using StudentExam.Model.Domain;
+using System.Collections.Generic;
 
 namespace StudentExam.Service
 {
@@ -15,28 +16,29 @@ namespace StudentExam.Service
             _context = context;
         }
 
-        public async Task<bool> AddQuestionToSet( QuestionSet set)
+        public async Task<bool> AddQuestionToSet(QuestionSet set)
         {
-            if(set != null && set.QuestionID!=null)
+            if (set != null && set.QuestionID != null)
             {
-               bool questionExists = await _context.Questions.AnyAsync(q=>q.QuestionId==set.QuestionID);
-                if(questionExists)
+                bool questionExists = await _context.Questions.AnyAsync(q => q.QuestionId == set.QuestionID);
+                bool questionExistsInTest = await _context.QuestionSets.AnyAsync(s => s.QuestionID == set.QuestionID && s.TestId == set.TestId);
+                if (!questionExistsInTest && questionExists)
                 {
                     _context.QuestionSets.Add(set);
-                     await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
                     return true;
                 }
-                
+
             }
             return false;
-           
+
         }
 
         public async Task<bool> DeleteQuestionFromSet(int SetId)
         {
             QuestionSet set = await _context.QuestionSets.FirstOrDefaultAsync(S => S.QuestionSetId == SetId);
 
-            if(set != null)
+            if (set != null)
             {
                 _context.QuestionSets.Remove(set);
                 await _context.SaveChangesAsync();
@@ -47,5 +49,22 @@ namespace StudentExam.Service
                 return false;
             }
         }
+
+        public async Task<ICollection<QuestionSet>> GetAllQuestionsetByTestId(int TestId)
+        {
+            if (TestId == null)
+            {
+                return null;
+            }
+            else
+            {
+                List<QuestionSet> questionSets = await _context.QuestionSets
+                    .Where(questionSet => questionSet.TestId == TestId)
+                    .ToListAsync();
+
+                return questionSets;
+            }
+        }
+
     }
 }

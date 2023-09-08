@@ -14,17 +14,26 @@
     {
         @foreach (var test in Model)
         {
-            <div class="col-md-4 mb-3">
+            <div class="col-md-3 mb-3">
                 <div class="card">
                     <div class="card-body">
-                        @*<p class="card-text">@test.TestId</p>*@
-                        <h5 class="card-title">@test.TestTitle</h5>
+                      <div class="row">
+
+                            <div class="col-md-4">
+                                <h5 class="card-title">@test.TestTitle</h5>
+                            </div> 
+                            <div class="col-md-8 text-end">
+                                <a href="@Url.Action("ActivateTest","StudentTest",new {testId=test.TestId})" class="btn btn-primary">Activate</a>
+                            </div>
+                      </div>
+                        
                         <p class="card-text">@test.TestDesc</p>
                         <p class="card-text">Pass Score: @test.PassScore</p>
                         <p class="card-text">Total Marks: @test.TotalMarks</p>
 
                         <a href="@Url.Action("addQuestionToSet","StudentTest",new {testId=test.TestId})" class="btn btn-primary">Add Question to Set</a>
-                        @*<a href="@Url.Action("QuestionSets", "StudentTest", new { courseId = course.CourseId })" class="btn btn-primary ">schedule Test</a>&ensp;*@
+                       
+                        
                     </div>
                 </div>
             </div>

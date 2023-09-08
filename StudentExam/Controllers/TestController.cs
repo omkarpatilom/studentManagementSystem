@@ -17,23 +17,24 @@ namespace StudentExam.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody]Test test)
+        public async Task<IActionResult> Create([FromBody] Test test)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Tests.Add(test);
                 await _context.SaveChangesAsync();
                 return Ok(test);
-            }else
-            return BadRequest();
+            }
+            else
+                return BadRequest();
         }
 
         [HttpPost("CreateQuestionSetapi")]
         public async Task<IActionResult> CreateQuestionSet(QuestionSet set)
         {
-           if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                  _context.QuestionSets.Add(set);
+                _context.QuestionSets.Add(set);
                 await _context.SaveChangesAsync();
                 return Ok(set);
             }
@@ -43,7 +44,7 @@ namespace StudentExam.Controllers
         }
 
         [HttpPost("QuestionSetsapi")]
-        public async Task<IActionResult> QuestionSets([FromBody]int courseId)
+        public async Task<IActionResult> QuestionSets([FromBody] int courseId)
         {
             List<Test> testDetails = _context.Tests
                 .Where(t => t.CourseID == courseId)
@@ -65,14 +66,15 @@ namespace StudentExam.Controllers
         [HttpGet("GetTestDetails")]
         public async Task<IActionResult> GetTestDetails(int TestId)
         {
-            if (TestId!= null || TestId>0)
+            if (TestId != null || TestId > 0)
             {
                 Test Testinfo = await _context.Tests.FirstOrDefaultAsync(T => T.TestId == TestId);
 
                 if (Testinfo != null)
                 {
                     return Ok(Testinfo);
-                }else
+                }
+                else
                     return BadRequest();
             }
             else
@@ -80,7 +82,39 @@ namespace StudentExam.Controllers
                 return BadRequest();
             }
         }
+        [HttpPatch("UpdateTest/{TestId}")]
+        public async Task<IActionResult> UpdateTest(int TestId, [FromBody] Test test)
+        {
+            if (TestId != null && test != null)
+            {
+                var ExsitedTest = await _context.Tests.FirstOrDefaultAsync(t => t.TestId == TestId);
 
+                if (ExsitedTest != null)
+                {
+                    ExsitedTest.TestTitle = test.TestTitle ?? ExsitedTest.TestTitle;
+                    ExsitedTest.TestDesc = test.TestDesc ?? ExsitedTest.TestDesc;
+                    ExsitedTest.StartTime = test.StartTime;
+                    ExsitedTest.EndTime = test.EndTime;
+                    ExsitedTest.CourseID = test.CourseID;
+                    ExsitedTest.Instructions = test.Instructions;
+                    ExsitedTest.PassScore = test.PassScore;
+                    ExsitedTest.TotalMarks = test.TotalMarks;
+                    ExsitedTest.Status = test.Status;
+
+
+                    _context.Tests.Update(ExsitedTest);
+                    _context.SaveChangesAsync();
+                    return Ok(ExsitedTest);
+
+
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
 
     }
 }

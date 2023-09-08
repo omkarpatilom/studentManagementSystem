@@ -11,8 +11,8 @@ using StudentExam.Data;
 namespace StudentExam.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    [Migration("20230901092431_courseId added into q")]
-    partial class courseIdaddedintoq
+    [Migration("20230906081113_Status added in Test")]
+    partial class StatusaddedinTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,8 +73,7 @@ namespace StudentExam.Migrations
 
                     b.HasIndex("QuestionID");
 
-                    b.HasIndex("TestId")
-                        .IsUnique();
+                    b.HasIndex("TestId");
 
                     b.ToTable("QuestionSets");
                 });
@@ -100,6 +99,10 @@ namespace StudentExam.Migrations
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TestDesc")
                         .IsRequired()

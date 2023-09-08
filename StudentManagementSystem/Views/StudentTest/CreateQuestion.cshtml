@@ -1,0 +1,95 @@
+﻿@model StudentExam.Model.Domain.QuestionDetails
+
+<h5>Add Question</h5>
+<br />
+<form method="post" asp-controller="StudentTest" asp-action="CreateQuestion">
+    <div>
+        <div class="question-container">
+            <div class="mb-4">
+                <input type="text" id="form6Example11" placeholder="Question" class="form-control" asp-for="QuestionDescription" />
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div>
+                        <input type="text" placeholder="Option1" class="form-control" asp-for="Option1" required />
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <input type="text" placeholder="Option2" class="form-control" asp-for="Option2" />
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div>
+                        <input type="text" placeholder="Option3" class="form-control" asp-for="Option3" />
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <input type="text" placeholder="Option4" class="form-control" asp-for="Option4" />
+                        <input type="hidden" id="CourseID" asp-for="CourseID" name="CourseID" value="@ViewBag.CourseID">
+                        <input type="hidden" id="TestId" name="TestId" value="@ViewBag.TestId">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="CorrectAns">Select Correct Answer:</label>
+                <select id="CorrectAns" name="CorrectAns" class="form-control">
+                    <!-- Add an empty option as a placeholder -->
+                    <option value="">Select an option</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- End of initial question fields -->
+        <button type="submit" >Add a new question</button>
+        
+    </div>
+</form>
+
+<script>
+    // JavaScript to dynamically populate the options in the dropdown
+    document.addEventListener("DOMContentLoaded", function () {
+        const option1Input = document.querySelector("input[name='Option1']");
+        const option2Input = document.querySelector("input[name='Option2']");
+        const option3Input = document.querySelector("input[name='Option3']");
+        const option4Input = document.querySelector("input[name='Option4']");
+        const correctAnsDropdown = document.getElementById("CorrectAns");
+
+        // Function to update the dropdown options based on input values
+        function updateDropdownOptions() {
+            correctAnsDropdown.innerHTML = ""; // Clear existing options
+
+            // Add options based on input values
+            if (option1Input.value.trim() !== "") {
+                correctAnsDropdown.appendChild(createOption("Option1", "Option 1"));
+            }
+            if (option2Input.value.trim() !== "") {
+                correctAnsDropdown.appendChild(createOption("Option2", "Option 2"));
+            }
+            if (option3Input.value.trim() !== "") {
+                correctAnsDropdown.appendChild(createOption("Option3", "Option 3"));
+            }
+            if (option4Input.value.trim() !== "") {
+                correctAnsDropdown.appendChild(createOption("Option4", "Option 4"));
+            }
+        }
+
+        // Function to create an option element
+        function createOption(value, text) {
+            const option = document.createElement("option");
+            option.value = value;
+            option.text = text;
+            return option;
+        }
+
+        // Update the dropdown options initially and whenever input values change
+        updateDropdownOptions();
+        option1Input.addEventListener("input", updateDropdownOptions);
+        option2Input.addEventListener("input", updateDropdownOptions);
+        option3Input.addEventListener("input", updateDropdownOptions);
+        option4Input.addEventListener("input", updateDropdownOptions);
+    });
+</script>

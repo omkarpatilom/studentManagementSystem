@@ -1,5 +1,13 @@
 ﻿@model List<StudentExam.Model.Domain.QuestionDetails>
 
+<div class="row">
+    <div class="col-md-4">
+        <h1>Question Details</h1>
+    </div>
+    <div class="col-md-8 text-end">
+        <a href="@Url.Action("CreateQuestion", "StudentTest", new {CourseId=ViewBag.CourseID,TestId=ViewBag.TestId})" class="btn btn-success">Create Question</a>
+    </div>
+</div>
 <form method="post" action="AddQuestion">
     <table class="table table-striped">
         <thead>
@@ -12,11 +20,13 @@
                 <th>Answer</th>
                 <th>Marks</th>
                 <th>Action</th>
+             
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach(var item in Model)
             {
+             
                 <tr>
                     <td>@item.QuestionDescription</td>
                     <td>@item.Option1</td>
@@ -25,205 +35,28 @@
                     <td>@item.Option4</td>
                     <td>@item.CorrectAns</td>
                     <td>
-                        <input type="number" name="set.Marks" min="1" max="100" step="1" value="1">
-                        <input type="hidden" name="set.QuestionID" value="@item.QuestionId">
-                        <input type="hidden" name="set.TestId" value="@ViewBag.TestId">
-
+                        <input type="number" name="Marks[@item.QuestionId]" min="1" max="100" step="1" value="1">
                     </td>
-
-                    <td><button type="submit" class="btn btn-outline-primary">Add</button></td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary" onclick="submitRow(@item.QuestionId)">Add</button>
+                        
+                        @*<button type="submit" class="btn btn-outline-primary" asp-action="DeleteQuestion">Delete</button>*@
+                        <a href="@Url.Action("DeleteQuestion", "StudentTest", new { QuestionId = item.QuestionId,TestId=ViewBag.TestId })" class="btn btn-outline-primary">Delete</a>
+                    </td>
+                   
                 </tr>
             }
         </tbody>
     </table>
+    <input type="hidden" id="selectedRowId" name="SelectedRowId" value="">
+    <input type="hidden" id="SelectTestId" name="SelectTestId" value="@ViewBag.TestId" />
 </form>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Form</title>
-    <!-- Add your Bootstrap CSS link here if needed -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div id="forms-container">
-        <!-- Your existing form -->
-        <form>
-            <!-- Form fields for the initial question -->
-            <div class="question-container">
-                <div class="form-outline mb-4">
-                    <input type="text" id="form6Example11" placeholder="Question" class="form-control" />
-                </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <div class="form-outline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="correctAnswer1" value="1">
-                            </label>
-                            <input type="text" id="form6Example12" placeholder="Option1" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-outline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="correctAnswer1" value="2">
-                            </label>
-                            <input type="text" id="form6Example13" placeholder="Option2" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-outline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="correctAnswer1" value="3">
-                            </label>
-                            <input type="text" id="form6Example14" placeholder="Option3" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-outline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="correctAnswer1" value="4">
-                            </label>
-                            <input type="text" id="form6Example15" placeholder="Option4" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End of initial question fields -->
-            <button type="button" class="btn btn-link" onclick="addNewForm(this)">Add a new question</button>
-        </form>
-    </div>
-
-    <!-- Add your CSS to align radio buttons and input fields -->
-    <style>
-        .form-check-label {
-            margin-right: 10px;
-            vertical-align: central;
-        }
-    </style>
-
-    <!-- JavaScript code -->
-    <script>
-        // Counter to keep track of the number of forms
-        let formCounter = 1;
-
-        // Function to add a new form
-        function addNewForm(button) {
-            formCounter++;
-            const formsContainer = document.getElementById('forms-container');
-
-            // Hide the previous button
-            button.style.display = 'none';
-
-            // Create a new question container
-            const newQuestionContainer = document.createElement('div');
-            newQuestionContainer.className = 'question-container';
-            newQuestionContainer.innerHTML = `
-                                        <!-- Form fields for the new question -->
-                                        <div class="form-outline mb-4">
-                                            <input type="text" id="form6Example${formCounter}1" placeholder="Question" class="form-control" />
-                                        </div>
-                                        <div class="row mb-4">
-                                            <div class="col">
-                                                <div class="form-outline">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="correctAnswer${formCounter}" value="1">
-                                                    </label>
-                                                    <input type="text" id="form6Example${formCounter}2" placeholder="Option1" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-outline">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="correctAnswer${formCounter}" value="2">
-                                                    </label>
-                                                    <input type="text" id="form6Example${formCounter}3" placeholder="Option2" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-outline">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="correctAnswer${formCounter}" value="3">
-                                                    </label>
-                                                    <input type="text" id="form6Example${formCounter}4" placeholder="Option3" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-outline">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="correctAnswer${formCounter}" value="4">
-                                                    </label>
-                                                    <input type="text" id="form6Example${formCounter}5" placeholder="Option4" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `;
-
-            // Append the new question container
-            formsContainer.appendChild(newQuestionContainer);
-
-            // Create a new button container and button
-            const newButtonContainer = document.createElement('div');
-            newButtonContainer.className = 'button-container';
-            const newButton = document.createElement('button');
-            newButton.type = 'button';
-            newButton.className = 'btn btn-link';
-            newButton.textContent = 'Add a new question';
-            newButton.addEventListener('click', () => addNewForm(newButton));
-
-            // Append the new button container and button
-            newButtonContainer.appendChild(newButton);
-            formsContainer.appendChild(newButtonContainer);
-        }
-    </script>
-
-    <!-- Add your Bootstrap and jQuery scripts here if needed -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
-*@
+<script>
+    function submitRow(questionId) {
+        document.getElementById('selectedRowId').value = questionId;
+        document.getElementById('SelectTestId').value = @ViewBag.TestId
+        document.forms[0].submit();
+    }
+</script>

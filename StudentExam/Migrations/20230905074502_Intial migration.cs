@@ -6,7 +6,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace StudentExam.Migrations
 {
-    public partial class courseIdaddedintoq : Migration
+    public partial class Intialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -89,8 +89,7 @@ namespace StudentExam.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionSets_TestId",
                 table: "QuestionSets",
-                column: "TestId",
-                unique: true);
+                column: "TestId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

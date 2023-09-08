@@ -28,5 +28,20 @@ namespace StudentExam.Controllers
             return await _questionSetService.DeleteQuestionFromSet(SetId);
         }
 
+        [HttpGet("GetAllQuestionsetByTestId/{TestId}")]
+        public async Task<IActionResult> GetAllQuestionsetByTestId(int TestId)
+        {
+            var QuestionSet = await _questionSetService.GetAllQuestionsetByTestId(TestId);
+
+            if (QuestionSet == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(QuestionSet);
+            }
+        }
+
     }
 }

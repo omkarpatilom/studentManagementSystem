@@ -17,6 +17,7 @@ namespace StudentExam.Model.Domain
 
         public QuestionSet? QuestionSet { get; set; }
         public int CourseID { get; set; }
+        public string Status { get; set; }
 
         
 

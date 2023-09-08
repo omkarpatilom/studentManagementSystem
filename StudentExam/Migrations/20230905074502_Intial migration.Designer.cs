@@ -11,8 +11,8 @@ using StudentExam.Data;
 namespace StudentExam.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    [Migration("20230901060858_intial mig")]
-    partial class intialmig
+    [Migration("20230905074502_Intial migration")]
+    partial class Intialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,9 @@ namespace StudentExam.Migrations
 
                     b.Property<string>("CorrectAns")
                         .HasColumnType("longtext");
+
+                    b.Property<int?>("CourseID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Option1")
                         .HasColumnType("longtext");
@@ -70,8 +73,7 @@ namespace StudentExam.Migrations
 
                     b.HasIndex("QuestionID");
 
-                    b.HasIndex("TestId")
-                        .IsUnique();
+                    b.HasIndex("TestId");
 
                     b.ToTable("QuestionSets");
                 });

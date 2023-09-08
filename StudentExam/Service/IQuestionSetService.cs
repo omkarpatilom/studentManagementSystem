@@ -9,5 +9,6 @@ namespace StudentExam.Service
           Task<bool> AddQuestionToSet(QuestionSet set);
 
           Task<bool> DeleteQuestionFromSet(int SetId);
+          Task<ICollection<QuestionSet>> GetAllQuestionsetByTestId(int TestId);
     }
 }
